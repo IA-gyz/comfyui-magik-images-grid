@@ -1,0 +1,80 @@
+{
+  "v": 1,
+  "mode": "custom",
+  "canvas": {
+    "w": 1600,
+    "h": 1100,
+    "heightMode": "fixed",
+    "background": "#111820"
+  },
+  "grid": {
+    "columns": 3,
+    "gap": 16,
+    "padding": 24,
+    "rowHeight": 240
+  },
+  "orphans": "placeholder",
+  "render": {
+    "resample": "lanczos",
+    "maxPixels": 64000000
+  },
+  "sources": [],
+  "items": [
+    {
+      "uid": "collage-0",
+      "source": "in1:0",
+      "x": 40,
+      "y": 40,
+      "w": 700,
+      "h": 1000,
+      "z": 0,
+      "fit": "cover",
+      "opacity": 1,
+      "visible": true,
+      "anchorX": 0.5,
+      "anchorY": 0.5
+    },
+    {
+      "uid": "collage-1",
+      "source": "in1:1",
+      "x": 690,
+      "y": 80,
+      "w": 840,
+      "h": 520,
+      "z": 1,
+      "fit": "cover",
+      "opacity": 1,
+      "visible": true,
+      "anchorX": 0.5,
+      "anchorY": 0.5
+    },
+    {
+      "uid": "collage-2",
+      "source": "in1:2",
+      "x": 770,
+      "y": 570,
+      "w": 650,
+      "h": 480,
+      "z": 2,
+      "fit": "cover",
+      "opacity": 1,
+      "visible": true,
+      "anchorX": 0.5,
+      "anchorY": 0.5
+    },
+    {
+      "uid": "collage-3",
+      "source": "in1:3",
+      "x": 610,
+      "y": 400,
+      "w": 430,
+      "h": 430,
+      "z": 3,
+      "fit": "cover",
+      "opacity": 0.8,
+      "visible": true,
+      "anchorX": 0.5,
+      "anchorY": 0.5
+    }
+  ]
+}

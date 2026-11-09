@@ -1,0 +1,13 @@
+{
+  "name": "magik-image-grid",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/test_layout.mjs",
+    "test:dom": "node tests/test_editor_dom.mjs"
+  },
+  "devDependencies": {
+    "happy-dom": "20.14.5"
+  }
+}

@@ -1,0 +1,22 @@
+import {Window} from 'happy-dom';
+import assert from 'node:assert/strict';
+const window=new Window({url:'http://localhost'});
+for(const key of ['window','document','ResizeObserver','HTMLElement','HTMLInputElement'])globalThis[key]=window[key];
+const {GridEditor}=await import('../js/editor.js');
+const {defaults,newItem,fnv1a32}=await import('../js/layout.js');
+let raw='';const editor=new GridEditor({read:()=>raw,write:v=>raw=v});document.body.append(editor.root);
+const d=defaults();d.sources=[{id:'in1:0',w:200,h:100},{id:'in2:0',w:100,h:200}];d.items=d.sources.map(s=>newItem(s,d));d.items.forEach((i,n)=>i.z=n);
+editor.receive({v:1,received:fnv1a32(''),layout:d,inventory:d.sources,thumbnails:{},warnings:[]});
+assert.equal(editor.root.querySelectorAll('.mg-frame').length,2);assert.equal(JSON.parse(raw).items.length,2);
+editor.selected=d.items[0].uid;editor.render();assert.equal(editor.root.querySelectorAll('.mg-handle').length,1);
+const start=editor.resolved.frames[0];const before=JSON.stringify(editor.layout);
+editor.duplicate();assert.equal(editor.layout.items.length,3);assert.equal(editor.layout.mode,'custom');
+editor.history(false);assert.equal(JSON.stringify(editor.layout),before);
+editor.history(true);assert.equal(editor.layout.items.length,3);
+editor.selected=editor.layout.items.at(-1).uid;editor.remove();assert.equal(editor.layout.items.length,2);
+editor.selected=editor.layout.items[0].uid;editor.layer(true);assert.equal(editor.layout.items[0].z,1);
+editor.key({target:editor.root,key:'ArrowRight',shiftKey:true,stopPropagation(){},preventDefault(){}});assert.equal(editor.layout.items[0].x,start.x+10);
+editor.controls.w.value='0';editor.controls.w.dispatchEvent(new window.Event('change'));assert.equal(editor.layout.canvas.w,1);
+// Width 1 is allowed for custom collage, but trying an invalid automatic grid must roll back.
+editor.controls.mode.value='uniform';editor.controls.mode.dispatchEvent(new window.Event('change'));assert.equal(editor.layout.mode,'custom');assert.match(editor.error,/width/i);
+editor.destroy();window.happyDOM.abort();console.log('DOM editor: receive, selection, duplicate, undo/redo, delete, layering, nudge, validation passed.');
